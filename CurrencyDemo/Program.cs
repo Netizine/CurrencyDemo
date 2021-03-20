@@ -105,6 +105,8 @@ namespace CurrencyDemo
                 Console.WriteLine(denomination.Value + " " + denomination.Key.Name + " (s)");
 
             }
+            Console.WriteLine("Press any key to exit");
+            Console.ReadLine();
         }
 
 
