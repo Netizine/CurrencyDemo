@@ -4,16 +4,37 @@ using System.Linq;
 
 namespace CurrencyDemo
 {
+    /// <summary>
+    /// CurrencyType Class. This class cannot be inherited.
+    /// Implements the <see cref="CurrencyDemo.ExtendedEnum`1" />
+    /// Implements the <see cref="CurrencyDemo.ICurrencyType" />
+    /// </summary>
+    /// <seealso cref="CurrencyDemo.ExtendedEnum`1" />
+    /// <seealso cref="CurrencyDemo.ICurrencyType" />
     public sealed class CurrencyType : ExtendedEnum<CurrencyTypeFilter>, ICurrencyType
     {
+        /// <summary>
+        /// Provides support for lazy initialization
+        /// </summary>
         private static readonly Lazy<CurrencyType>
             Lazy =
                 new(() => new CurrencyType());
 
+        /// <summary>
+        /// Gets the instance.
+        /// </summary>
+        /// <value>The instance.</value>
         public static CurrencyType Instance => Lazy.Value;
 
+        /// <summary>
+        /// Sets the currency type list.
+        /// </summary>
+        /// <value>The currency type list.</value>
         private List<CurrencyType> CurrencyTypeList { get; }
 
+        /// <summary>
+        /// Prevents a default instance of the <see cref="CurrencyType"/> class from being created.
+        /// </summary>
         private CurrencyType()
         {
             CurrencyTypeList = new List<CurrencyType>
@@ -64,36 +85,72 @@ namespace CurrencyDemo
 
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CurrencyType"/> class.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="currencyTypeFilter">The currency type filter.</param>
         private CurrencyType(int id, string name, decimal value, CurrencyTypeFilter currencyTypeFilter) : base(id, name, value, currencyTypeFilter)
         {
 
         }
 
+        /// <summary>
+        /// Gets the CurrencyType from the name string.
+        /// </summary>
+        /// <param name="currencyString">The currency string.</param>
+        /// <returns>CurrencyType.</returns>
         public CurrencyType FromString(string currencyString)
         {
             return List().Single(r => string.Equals(r.Name, currencyString, StringComparison.OrdinalIgnoreCase));
         }
 
+        /// <summary>
+        /// Gets the CurrencyType from the identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>CurrencyType.</returns>
         public CurrencyType FromId(int id)
         {
             return List().Single(r => r.Id == id);
         }
 
+        /// <summary>
+        /// Lists the specified currency type filter.
+        /// </summary>
+        /// <param name="currencyTypeFilter">The currency type filter.</param>
+        /// <returns>System.Collections.Generic.IEnumerable&lt;CurrencyDemo.CurrencyType&gt;.</returns>
         public IEnumerable<CurrencyType> List(CurrencyTypeFilter currencyTypeFilter = CurrencyTypeFilter.None)
         {
             return currencyTypeFilter == CurrencyTypeFilter.None ? CurrencyTypeList : CurrencyTypeList.Where(currencyType => currencyType.Filter == currencyTypeFilter);
         }
 
+        /// <summary>
+        /// Gets the decimal value.
+        /// </summary>
+        /// <param name="currencyType">Type of the currency.</param>
+        /// <returns>System.Decimal.</returns>
         public decimal GetDecimalValue(CurrencyType currencyType)
         {
             return Convert.ToDecimal(currencyType.Value);
         }
 
+        /// <summary>
+        /// Gets the currency type filter identifier.
+        /// </summary>
+        /// <param name="currencyType">Type of the currency.</param>
+        /// <returns>System.Decimal.</returns>
         public decimal GetCurrencyTypeFilterId(CurrencyType currencyType)
         {
             return (int)currencyType.Filter;
         }
 
+        /// <summary>
+        /// Converts to string.
+        /// </summary>
+        /// <returns>string.</returns>
         public override string ToString()
         {
             return Name;

@@ -5,8 +5,15 @@ using System.Net;
 
 namespace CurrencyDemo
 {
+    /// <summary>
+    /// Program Class.
+    /// </summary>
     class Program
     {
+        /// <summary>
+        /// Defines the entry point of the application.
+        /// </summary>
+        /// <param name="args">The arguments.</param>
         static void Main(string[] args)
         {
             var currencyType = CurrencyType.Instance;
@@ -110,6 +117,11 @@ namespace CurrencyDemo
         }
 
 
+        /// <summary>
+        /// Gets the currency description.
+        /// </summary>
+        /// <param name="currencyType">Type of the currency.</param>
+        /// <returns>System.String.</returns>
         private static string GetDescription(CurrencyTypeFilter currencyType)
         {
             var type = currencyType.GetType();
@@ -131,6 +143,13 @@ namespace CurrencyDemo
             return null;
         }
 
+        /// <summary>
+        /// Performs the currency conversion.
+        /// </summary>
+        /// <param name="amount">The amount.</param>
+        /// <param name="fromCurrency">From currency.</param>
+        /// <param name="toCurrency">To currency.</param>
+        /// <returns>System.Decimal.</returns>
         public static decimal CurrencyConversion(decimal amount, string fromCurrency, string toCurrency)
         {
             var url = $"http://rate-exchange-1.appspot.com/currency?from={fromCurrency}&to={toCurrency}";
@@ -146,6 +165,12 @@ namespace CurrencyDemo
             }
         }
 
+        /// <summary>
+        /// Processes the payment.
+        /// </summary>
+        /// <param name="payment">The payment.</param>
+        /// <param name="currencyType">Type of the currency.</param>
+        /// <returns>Payment.</returns>
         private static Payment ProcessPayment(Payment payment, CurrencyType currencyType)
         {
             var change = payment.AmountSubmitted - payment.Amount;

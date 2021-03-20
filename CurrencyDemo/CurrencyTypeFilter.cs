@@ -2,6 +2,9 @@
 
 namespace CurrencyDemo
 {
+    /// <summary>
+    /// CurrencyTypeFilter Enum
+    /// </summary>
     public enum CurrencyTypeFilter
     {
         [Description("None")]
